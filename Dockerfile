@@ -36,6 +36,12 @@ RUN set -ex; \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
+    
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN sudo dpkg --install google-chrome-stable_current_amd64.deb
+RUN sudo apt install --assume-yes --fix-broken
+RUN sudo apt-get install gdebi
+RUN sudo apt-get install -f
 
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
@@ -43,16 +49,16 @@ ENV HOME=/root \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=C.UTF-8 \
     DISPLAY=:0.0 \
-    DISPLAY_WIDTH=1024 \
+    DISPLAY_WIDTH=1366 \
     DISPLAY_HEIGHT=768 \
     RUN_XTERM=yes \
     RUN_UNITY=yes
 
 RUN adduser ubuntu
 
-RUN echo "ubuntu:ubuntu" | chpasswd && \
-    adduser ubuntu sudo && \
-    sudo usermod -a -G sudo ubuntu
+RUN echo "John:2001" | chpasswd && \
+    adduser John sudo && \
+    sudo usermod -a -G sudo John
 
 RUN wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb && apt install ./teamviewer_amd64.deb
 
